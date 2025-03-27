@@ -1,24 +1,22 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8" />
-  <title>Redirecting...</title>
-</head>
-<body>
-  <p>Redirecting...</p>
-  <script>
-    const url = new URL(window.location.href);
-    const code = url.searchParams.get('code');
-    const error = url.searchParams.get('error');
+<title>Authentication complete</title>
+<p>Authentication is complete. If this does not happen automatically, please close the window.</p>
+<script>
+  function postAuthenticationMessage() {
+    const message = {
+      'flutter-web-auth-2': window.location.href
+    };
 
-    if (code) {
-      // 👇 跳转回 App（确保 intent-filter 设置正确）
-      window.location.href = `com.jh.gogame.app:/auth?code=${code}`;
-    } else if (error) {
-      window.location.href = `com.jh.gogame.app:/auth?error=${error}`;
+    if (window.opener) {
+      window.opener.postMessage(message, window.location.origin);
+      window.close();
+    } else if (window.parent && window.parent !== window) {
+      window.parent.postMessage(message, window.location.origin);
     } else {
-      document.body.innerText = 'No code or error found in URL.';
+      localStorage.setItem('flutter-web-auth-2', window.location.href);
+      window.close();
     }
-  </script>
-</body>
-</html>
+  }
+
+  postAuthenticationMessage();
+</script>
