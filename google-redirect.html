@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redirecting...</title>
+    <meta charset="utf-8" />
+    <script>
+        window.onload = function () {
+          try {
+            const url = new URL(window.location.href);
+            const code = url.searchParams.get("code");
+            const error = url.searchParams.get("error");
+
+            if (code) {
+              const redirectUri = `com.jh.gogame.app:/auth?code=${code}`;
+              alert("✅ 授权成功！即将跳转 App\nCode: " + code);
+              console.log("Redirecting to:", redirectUri);
+              window.location.replace(redirectUri);
+            } else if (error) {
+              const errorUri = `com.jh.gogame.app:/auth?error=${error}`;
+              alert("❌ 授权失败: " + error);
+              console.log("Redirecting to:", errorUri);
+              window.location.replace(errorUri);
+            } else {
+              alert("⚠️ 没有 code 或 error 参数！");
+              document.body.innerText = "No code or error found in URL.";
+            }
+          } catch (e) {
+            alert("⚠️ 异常：" + e);
+            document.body.innerText = "Exception occurred: " + e;
+          }
+        };
+    </script>
+</head>
+<body>
+Redirecting...
+</body>
+</html>
