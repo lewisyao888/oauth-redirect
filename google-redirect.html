@@ -11,11 +11,11 @@
         const error = url.searchParams.get("error");
 
         if (code) {
-          const redirectUri = `com.jh.gogame.app:/auth?code=${code}`;
+          const redirectUri = `com.jh.gogame.app://auth?code=${code}`;
           console.log("Redirecting to:", redirectUri);
-          window.location.replace(redirectUri); // ✅ 替换浏览器记录，更兼容
+          window.location.replace(redirectUri);
         } else if (error) {
-          const errorUri = `com.jh.gogame.app:/auth?error=${error}`;
+          const errorUri = `com.jh.gogame.app://auth?error=${error}`;
           console.log("Redirecting to:", errorUri);
           window.location.replace(errorUri);
         } else {
