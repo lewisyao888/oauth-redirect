@@ -10,12 +10,15 @@
         const code = url.searchParams.get("code");
         const error = url.searchParams.get("error");
 
+        // 判断来源（可自定义更复杂判断逻辑）
+        const source = url.hostname.includes("facebook") ? "facebook" : "google";
+
         if (code) {
-          const redirectUri = `com.jh.gogame.app://auth?code=${code}`;
+          const redirectUri = `com.jh.gogame.app://auth?code=${code}&source=${source}`;
           console.log("Redirecting to:", redirectUri);
           window.location.replace(redirectUri);
         } else if (error) {
-          const errorUri = `com.jh.gogame.app://auth?error=${error}`;
+          const errorUri = `com.jh.gogame.app://auth?error=${error}&source=${source}`;
           console.log("Redirecting to:", errorUri);
           window.location.replace(errorUri);
         } else {
